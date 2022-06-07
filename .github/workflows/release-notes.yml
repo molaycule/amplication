@@ -18,9 +18,3 @@ jobs:
         uses: release-drafter/release-drafter@v5
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          config-name: workflows/release-notes.yml
-          template: |
-            ## What’s Changed
-
-            $CHANGES
