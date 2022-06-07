@@ -2,25 +2,19 @@ name: Create Release Notes Preview
 
 on:
   pull_request:
-    branches: [ "master" ]
+    types: [ "opened", "reopened" ]
+    
+permissions:
+  contents: read
+  
 jobs:
   release_note:
+    permissions:
+        contents: write
+        pull-requests: write
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
       - name: Generate release notes
-        id: release-notes-preview
-        uses: guilhermetod/semantic-release-notes-preview@v1.0.0
-      - name: Comment release notes preview
-        uses: peter-evans/create-or-update-comment@v1
-        with:
-          issue-number: ${{ github.event.number }}
-          body: |
-            Thank you for you contribution. Below is a preview of the release notes if your PR gets merged.
-
-            ---
-
-            ${{ steps.release-notes-preview.outputs.releaseNotes }}
+        uses: release-drafter/release-drafter@v5
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
