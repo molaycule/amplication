@@ -16,7 +16,11 @@ jobs:
     steps:
       - name: Generate release notes
         uses: release-drafter/release-drafter@v5
-        with:
-          config-name: workflows/release-notes.yml
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          config-name: workflows/release-notes.yml
+          template: |
+            ## What’s Changed
+
+            $CHANGES
